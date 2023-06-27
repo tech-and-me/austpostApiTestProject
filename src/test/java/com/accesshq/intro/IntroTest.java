@@ -1,4 +1,4 @@
-package com.accesshq;
+package com.accesshq.intro;
 
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +19,6 @@ public class IntroTest {
         then()
                 .assertThat().statusCode(is(200)).log().all();
     }
-
 
     @Test
     public void greenwoodPostCodeTest(){
