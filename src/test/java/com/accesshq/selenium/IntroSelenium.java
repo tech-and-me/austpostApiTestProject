@@ -40,14 +40,24 @@ public class IntroSelenium {
 //        chromeDriver.findElement(By.id("loginButton")).click();
 //    }
 
+//    @Test
+//    public void chromeClickedDownUpLinksTest(){
+//        ChromeOptions options = new ChromeOptions();
+//        options.addArguments("--allow-all-origin=*");
+//        WebDriver chromeDriver = new ChromeDriver(options);
+//        chromeDriver.get(url);
+//        chromeDriver.findElement(By.className("anibtn")).click();
+//        chromeDriver.findElement(By.className("transition-y")).click();
+//    }
+
     @Test
     public void chromeClickedDownUpLinksTest(){
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--allow-all-origin=*");
         WebDriver chromeDriver = new ChromeDriver(options);
         chromeDriver.get(url);
-        chromeDriver.findElement(By.className("anibtn")).click();
-        chromeDriver.findElement(By.className("transition-y")).click();
+        String text = chromeDriver.findElement(By.className("display-1")).getText();
+        System.out.println(text);
     }
 
 }
