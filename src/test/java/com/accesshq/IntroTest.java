@@ -30,6 +30,6 @@ public class IntroTest {
         when()
                 .get("https://digitalapi.auspost.com.au/postcode/search.json").
         then()
-                .assertThat().body("localities.locality.postcode",equalTo("2900"));
+                .assertThat().body("localities.locality.postcode",equalTo(2900)).log().all();
     }
 }
