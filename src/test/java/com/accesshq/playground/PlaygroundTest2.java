@@ -55,10 +55,32 @@ public class PlaygroundTest2 {
         Assertions.assertEquals(thankYouText,finalText);
     }
 
+    @Test
+    public void clickPlanetEarthTest(){
+        driver.get(baseUrl);
+        WebElement planetsTab = driver.findElement(By.cssSelector("[aria-label = planets]"));
+        planetsTab.click();
 
-    @AfterEach
-    public void cleanup(){
-        driver.quit();
+        //Select all planets elements
+        var allPlanetCards = driver.findElements(By.cssSelector(".planet"));
+
+        //find planet earth
+        for(var planet:allPlanetCards){
+            if(planet.findElement(By.tagName("h2")).getText().equalsIgnoreCase("earth")){
+                planet.findElement(By.tagName("button")).click();
+                //select pop
+                WebDriverWait wait = new WebDriverWait(driver,10);
+                By byPopupBox = By.cssSelector(".sna");
+                wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(byPopupBox));
+            }
+        }
+
     }
+
+
+//    @AfterEach
+//    public void cleanup(){
+//        driver.quit();
+//    }
 
 }
