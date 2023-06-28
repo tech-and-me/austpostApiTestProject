@@ -31,7 +31,7 @@ public class PlaygroundTest2 {
     @Test
     public void submitFormTest(){
         //setup
-        
+
         //Action
         driver.get(formUrl);
         WebElement btnModernTab = driver.findElement(By.className("v-tab"));

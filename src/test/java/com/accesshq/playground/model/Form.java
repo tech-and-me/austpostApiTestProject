@@ -1,6 +1,7 @@
 package com.accesshq.playground.model;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -40,6 +41,8 @@ public class Form {
                 return;
             }
         }
+
+        throw new NotFoundException("no such state");
     }
 
     public void clickAgree(){
