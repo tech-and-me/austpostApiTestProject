@@ -22,6 +22,7 @@ public class PlaygroundTest2 {
 
     @BeforeEach
     public void setup(){
+        System.setProperty("webdriver.chrome.driver","D:\\learning\\test-automation\\java-test-automation\\resources\\driver_v1\\chromedriver.exe");
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--allow-all-origin=*");
         driver = new ChromeDriver(options);
@@ -64,23 +65,28 @@ public class PlaygroundTest2 {
         //Select all planets elements
         var allPlanetCards = driver.findElements(By.cssSelector(".planet"));
 
-        //find planet earth
+        //Looping through all planets and find planet earth
         for(var planet:allPlanetCards){
             if(planet.findElement(By.tagName("h2")).getText().equalsIgnoreCase("earth")){
                 planet.findElement(By.tagName("button")).click();
-                //select pop
+
+                //Wait until popup box shown
                 WebDriverWait wait = new WebDriverWait(driver,10);
-                By byPopupBox = By.cssSelector(".sna");
+                By byPopupBox = By.cssSelector(".v-snack__wrapper");
                 wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(byPopupBox));
+
+                //Assert
+                String actualText = driver.findElement(byPopupBox).findElement(By.cssSelector(".popup-message")).getText();
+                String expectedText = "Exploring Earth";
+                Assertions.assertEquals(expectedText,actualText);
             }
         }
 
     }
 
-
-//    @AfterEach
-//    public void cleanup(){
-//        driver.quit();
-//    }
+    @AfterEach
+    public void cleanup(){
+        driver.quit();
+    }
 
 }
