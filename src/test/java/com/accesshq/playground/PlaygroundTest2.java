@@ -1,6 +1,7 @@
 package com.accesshq.playground;
 
 
+import com.accesshq.playground.model.Form;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +15,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class PlaygroundTest {
+public class PlaygroundTest2 {
     private final String baseUrl = "https://d18u5zoaatmpxx.cloudfront.net/#/";
     private final String formUrl = "https://d18u5zoaatmpxx.cloudfront.net/#/forms";
     private WebDriver driver;
@@ -28,48 +29,6 @@ public class PlaygroundTest {
     }
 
     @Test
-    public void homepageHeroTextTest(){
-        driver.get(baseUrl);
-        String heroText = driver.findElement(By.className("display-1")).getText();
-        Assertions.assertEquals("Web Playground",heroText);
-    }
-
-
-    @Test
-    public void clickMeDownChangeTextTest(){
-        driver.get(baseUrl);
-        String expectedText = "CLICK ME UP!";
-        var aniBtn = driver.findElement(By.cssSelector("a.anibtn"));
-        aniBtn.click();
-        //wait for text change
-        WebDriverWait wait = new WebDriverWait(driver,3);
-        wait.until(ExpectedConditions.textToBePresentInElement(aniBtn,"CLICK ME UP!"));
-        String actualTextAfterClicked = aniBtn.getText();
-        Assertions.assertEquals(expectedText,actualTextAfterClicked);
-    }
-
-
-    @Test
-    public void clickMeUpChangeTextTest(){
-        //Setup
-        driver.get(baseUrl);
-        String expectedText = "CLICK ME DOWN!";
-        var aniBtn = driver.findElement(By.cssSelector("a.anibtn"));
-
-        //Action
-        aniBtn.click();
-
-        //wait for text change
-        WebDriverWait wait = new WebDriverWait(driver,10);
-        wait.until(ExpectedConditions.textToBePresentInElement(aniBtn,"CLICK ME DOWN!"));
-        String actualTextAfterClicked = aniBtn.getText();
-
-        //Assert
-        Assertions.assertEquals(expectedText,actualTextAfterClicked);
-
-    }
-
-    @Test
     public void submitFormTest(){
         //setup
 
@@ -79,32 +38,14 @@ public class PlaygroundTest {
         WebElement btnModernTab = driver.findElement(By.className("v-tab"));
         btnModernTab.click();
 
-        WebElement nameInputElm = driver.findElement(By.id("name"));
-        nameInputElm.sendKeys("Phary");
+        Form form = new Form(driver);
+        form.enterName("Phary");
+        form.enterEmail("example@gmail.com");
+        form.selectState("NSW");
+        form.clickAgree();
+        form.submit();
 
-        WebElement emailInputElm = driver.findElement(By.id("email"));
-        emailInputElm.sendKeys("example@gmail.com");
-
-        WebElement stateInputElm = driver.findElement(By.id("state"));
-        stateInputElm.sendKeys("NSW");
-
-//        driver.findElement(By.id("state")).click();
-//        var options = driver.findElements(By.cssSelector("[role=option]"));
-
-        WebElement checkedElm = driver.findElement(By.id("agree"));
-        Actions at = new Actions(driver);
-        at.moveToElement(checkedElm).click().perform();
-
-        //click submit button
-        var allBtn = driver.findElements(By.tagName("button"));
-        System.out.println("All Btn: " + allBtn);
-        for(var btn:allBtn){
-            if(btn.getText().equalsIgnoreCase("submit")){
-                btn.click();
-            }
-        }
-
-        WebDriverWait wait = new WebDriverWait(driver,5);
+        WebDriverWait wait = new WebDriverWait(driver,10);
         By byPopupBox = By.cssSelector(".popup-message");
         wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(byPopupBox));
         String finalText = driver.findElement(byPopupBox).getText();
@@ -114,10 +55,9 @@ public class PlaygroundTest {
     }
 
 
-
-//    @AfterEach
-//    public void cleanup(){
-//        driver.quit();
-//    }
+    @AfterEach
+    public void cleanup(){
+        driver.quit();
+    }
 
 }
