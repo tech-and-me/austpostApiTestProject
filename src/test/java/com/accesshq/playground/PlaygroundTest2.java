@@ -31,15 +31,15 @@ public class PlaygroundTest2 {
     @Test
     public void submitFormTest(){
         //setup
-
-
+        
         //Action
         driver.get(formUrl);
         WebElement btnModernTab = driver.findElement(By.className("v-tab"));
         btnModernTab.click();
 
         Form form = new Form(driver);
-        form.enterName("Phary");
+        String name = "Phary";
+        form.enterName(name);
         form.enterEmail("example@gmail.com");
         form.selectState("NSW");
         form.clickAgree();
@@ -51,7 +51,8 @@ public class PlaygroundTest2 {
         String finalText = driver.findElement(byPopupBox).getText();
 
         //Assert
-        Assertions.assertEquals("Thanks for your feedback Phary",finalText);
+        String thankYouText = "Thanks for your feedback" + " " + name;
+        Assertions.assertEquals(thankYouText,finalText);
     }
 
 
